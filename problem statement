@@ -31,7 +31,7 @@ Output Format
 
 The output consists of 3 lines. The first line consists of the node's data in the list after its creation and is separated by space.
 
-The second line consists of the elements in the list after the deletion of loop nodes (if any) and is separated by space. NULL should be printed if the list is empty.
+The second line consists of the elements in the list after the deletion of loop nodes (if any) and is separated by space. NULL should be printed if the list is  empty.
 
 The third line is a string S that takes two values. YES if the sequence is a palindrome and NO otherwise. If the list is empty, then it should be considered as no palindromic sequence.
 
