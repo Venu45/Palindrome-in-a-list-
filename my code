@@ -1,0 +1,173 @@
+// ----------------------------------Use of Arrays or Vector is restricted---------------------------------------
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+struct dnode {
+            int data;
+            struct dnode *prev,*next,*cycle;
+        };
+    struct dnode *head,*tail,*saveptr;
+    int size=0;
+    
+ 
+
+int main() {
+     head=NULL;tail=NULL;saveptr=NULL;
+    
+    void add(int m){
+        for(int i=0;i<m;i++){
+            int data;
+            struct dnode *temp=(struct dnode *)malloc(sizeof(struct dnode));
+            scanf("%d",&data);
+            size++;
+            temp->data=data;
+            temp->next=NULL;
+            printf("%d ",data);
+            if(head==NULL){
+                head=temp;
+                head->prev=NULL;
+                tail=temp;
+                temp->cycle=NULL;
+            }
+            
+            else{
+                tail->next=temp;
+                temp->prev=tail;
+                temp->cycle=NULL;
+                tail=temp;
+              //  if(i==m-1){tail->next=NULL;}
+            }
+            
+        }
+    }
+    
+
+    void save(){
+        saveptr=tail;  //ptr=tail
+       // return 0;
+    }
+    
+    void loop_and_delete(){
+        if(saveptr !=NULL){
+            if(saveptr==head){
+                if(saveptr==tail){
+                    head=NULL;tail=NULL;
+                    struct dnode *tem;
+                    tem=saveptr;
+                    saveptr=NULL;
+                    free(tem);
+                    size--;
+                }
+                
+                else{
+                tail->cycle=saveptr;
+                head=head->next;
+                head->prev=NULL;
+                struct dnode *tem;
+                tem=saveptr;
+                saveptr=NULL;
+                free(tem);
+                size--;
+                }
+           }
+            else if(saveptr==tail){
+                tail->cycle=saveptr;
+                tail=tail->prev;
+                tail->next=NULL;
+                struct dnode *tem;
+                tem=saveptr;
+                saveptr=NULL;
+                free(tem);
+                size--; 
+            }
+
+            
+            else{
+            tail->cycle=saveptr;
+            (saveptr->prev)->next=(saveptr->next); 
+            (saveptr->next)->prev=saveptr->prev;
+             struct dnode *tem;
+                tem=saveptr;
+                saveptr=NULL;
+                free(tem);  
+                size--;}
+        }
+        else {return;}
+        
+      //  return 0;
+    }
+    
+    int n,x,m;
+    scanf("%d",&n);
+    if(n==0){
+        printf("NULL");
+     //   printf("\n");
+      //  printf("NULL");
+       // printf("\n");
+       // printf("NO"); 
+    }
+    
+   else{
+    for(int i=0;i<n;i++){
+        scanf("%d",&x);
+        if(x==1){
+            scanf("%d",&m);
+            if(m==0){printf("NULL");}
+            add(m);
+        }
+        else if(x==2){
+            save();
+        }
+        else{
+            loop_and_delete();
+        }
+    }
+    
+   }
+    
+    printf("\n");
+    
+    //printing after deleting loop nodes
+    
+    struct dnode *ptr;
+    ptr=head;
+    if(ptr==NULL){
+        printf("NULL");
+    }
+    int q=size;
+    while(q){
+        
+        printf("%d ",ptr->data);
+        ptr=ptr->next;
+        q--;
+    }
+    
+    printf("\n");
+    
+    //checking for palindrome
+    
+    int flag=0;   
+    int j=(size/2);
+    if(size==1){printf("YES");return 0;}
+    else{
+    while(j){
+        if(head->data==tail->data){flag=1;}
+        else{flag=2;break;}
+        head=head->next;
+        tail=tail->prev;
+        j--;
+    }
+    }
+    
+    if(flag==1){printf("YES");return 0;}
+    else{printf("NO");}
+    
+    
+    
+    
+    
+    
+    
+   return 0;
+}
